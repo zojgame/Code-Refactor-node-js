@@ -1,0 +1,24 @@
+#root {
+  overflow-y: hidden;
+  width: 100%;
+  height: 100vh;
+  margin: 0 auto;
+  text-align: center;
+  background-color: #1f2023;
+
+  --primary-color: #000;
+  --secondary-color: #fff;
+
+  --primary-hover-color: #000000cb;
+  --secondary-hover-color: #ffffff94;
+
+  --tertiary-color: rgb(156 163 175);
+  --tertiary-hover-color: #ffffffcc;
+  --tertiary-active-color: #ffffff;
+}
+
+@media (max-width: 500px) {
+  #root {
+    overflow-y: auto;
+  }
+}
