@@ -38,12 +38,15 @@ type Choice = {
 };
 
 type GPTRes = {
-  id: string;
-  object: string;
-  created: number;
-  model: string;
-  choices: Choice[];
+  message: string;
 };
+// type GPTRes = {
+//   id: string;
+//   object: string;
+//   created: number;
+//   model: string;
+//   choices: Choice[];
+// };
 
 export type {
   Language,

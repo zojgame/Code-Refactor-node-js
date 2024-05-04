@@ -1,11 +1,9 @@
 import jwt from "jsonwebtoken";
-import GPT_Request from "../models/gptRequest";
 import User from "../models/user";
 import { Request, Response } from "express";
 import { ChatCompletionMessageParam } from "openai/resources";
 import { secret } from "../config";
 import { DecodedData } from "../types";
-import GPT_Response from "../models/gptResponse";
 import History from "../models/history";
 
 const AUTH_TOKEN = "Bearer bb1a7ff1-b839-4324-939c-7a478b69aab7";
@@ -37,16 +35,28 @@ const getMessage = (
   code: string,
   languageId: number,
   typeId: number,
-  toneId: number
+  toneId: number,
+  additional: string
 ) => `
-Тебе подаётся код другого разработчика на языке ${LANGUAGES[languageId]}, тебе нужно ${TYPES[typeId]}, свой ответ представь только в виде кода и он должен быть как можно ${TONES[toneId]}.
+Тебе подаётся код другого разработчика на языке ${
+  LANGUAGES[languageId]
+}, тебе нужно ${TYPES[typeId]}, свой ответ представь только в виде кода, 
+как будто бы он находится в терминале, ничего лишнего добавлять не нужно, свои коментарии добавляй в коментарии характерные для данного языка программирования, код должен быть как можно ${
+  TONES[toneId]
+}.
+${
+  additional === ""
+    ? ""
+    : `Также вот пожелания к коду, которые нужно учесть: "${additional}"`
+}
+
 Вот код:
-${code}
+"${code}"
 `;
 
 class GPTController {
   async createRequest(req: Request, res: Response) {
-    const { code, type, tone, language } = req.body;
+    const { code, type, tone, language, additional } = req.body;
 
     const messages: ChatCompletionMessageParam[] = [
       {
@@ -55,7 +65,7 @@ class GPTController {
       },
       {
         role: ROLES.USER,
-        content: getMessage(code, language, type, tone),
+        content: getMessage(code, language, type, tone, additional),
       },
     ];
 
