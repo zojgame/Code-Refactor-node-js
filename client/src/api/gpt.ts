@@ -15,11 +15,16 @@ const gptReq = async (
       .post(GPT_REQUEST_API, {
         timeout: false,
         json: {
-          tone: tone,
-          type: type,
+          // tone: tone,
+          tone: "1",
+          // type: type,
+          type: "1",
           code: code,
-          languageRequest: languageRequest,
-          additional: additional,
+          language: "1",
+          // languageRequest: languageRequest,
+          // additional: additional,
+          // languageRequest: languageRequest,
+          // additional: additional,
         },
         headers: {
           Authorization: token,

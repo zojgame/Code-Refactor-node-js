@@ -31,7 +31,7 @@ const LoginModalComponent = () => {
           setModal(null);
           const response = res as AuthorizationRes;
           if (response) {
-            const token = `${response.tokenType} ${response.accessToken}`;
+            const token = `Bearer ${response.accessToken}`;
             localStorage.setItem("token", token);
           }
         });

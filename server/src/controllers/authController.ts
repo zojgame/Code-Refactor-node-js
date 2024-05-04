@@ -72,7 +72,11 @@ class AuthController {
       }
 
       const token = generateAccessToken(candidate._id, username);
-      return res.json({ token: token, message: "Вы успешно вошли" });
+      return res.json({
+        accessToken: token,
+        username: username,
+        message: "Вы успешно вошли",
+      });
     } catch (error) {
       console.log(error);
       res.status(400).json({ message: "Login error" });

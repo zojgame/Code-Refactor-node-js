@@ -54,7 +54,6 @@ const getPreviousHistory = (his: HistoryRes[]) => {
       const isMoreThanWeek = daysDifference > 7;
       return isMoreThanWeek;
     });
-
   return convertedDates;
 };
 
@@ -83,8 +82,14 @@ const HistoryPage = () => {
       getHistory(token)
         .then((data) => {
           if (data) {
-            setHistory(data as HistoryRes[]);
-            setIsAuth(true);
+            if (data.status === 204) {
+              console.log("Нет данных");
+            } else {
+              const { history } = data;
+
+              setHistory(history as HistoryRes[]);
+              setIsAuth(true);
+            }
           }
         })
         .catch(() => {
@@ -119,8 +124,9 @@ const HistoryPage = () => {
           Последние 7 дней
         </div>
         {lastWeekDates.map((hist) => {
-          const date = hist.dateTimeCreate.split(" ")[0].split(".").join("-");
-          const convertedDate = dayjs(date).format("DD MMM YYYY");
+          const convertedDate = dayjs(hist.dateTimeCreate).format(
+            "DD MMM YYYY"
+          );
           const language =
             languages.find((_, index) => String(index + 1) === hist.progLang) ??
             "javascript";

@@ -15,10 +15,10 @@ type AuthorizationRes = {
   id: number;
   username: string;
   accessToken: string;
-  tokenType: string;
 };
 
 type HistoryRes = {
+  user: string;
   requestCode: string | null;
   responseCode: string | null;
   id: number;

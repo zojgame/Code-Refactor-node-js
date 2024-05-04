@@ -6,7 +6,8 @@ import { GPT_Router } from "./router";
 import { Auth_Router } from "./router/authRouter";
 
 const database_url =
-  process.env.DATABASE ||
+  // process.env.DATABASE ||
+  process.env.MONGODBURL ||
   "mongodb+srv://zogame002:admin@cluster0.tfteftp.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0";
 const app = express();
 const port = process.env.PORT || 3000;

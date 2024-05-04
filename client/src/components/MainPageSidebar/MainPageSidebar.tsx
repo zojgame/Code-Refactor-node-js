@@ -56,7 +56,8 @@ const MainPageSidebar = () => {
           token
         )
           .then((res) => {
-            const codeProcessed = res.choices[0].message.content;
+            // const codeProcessed = res.choices[0].message.content;
+            const codeProcessed = res.message;
             setCodeProcessed(`${codeProcessed}`);
           })
           .finally(() => setModal(null));
@@ -69,7 +70,10 @@ const MainPageSidebar = () => {
           form.additional
         )
           .then((res) => {
-            const codeProcessed = res.choices[0].message.content;
+            // const codeProcessed = res.choices[0].message.content;
+            const codeProcessed = res.message;
+
+            // setCodeProcessed(`${codeProcessed}`);
             setCodeProcessed(`${codeProcessed}`);
           })
           .finally(() => setModal(null));
