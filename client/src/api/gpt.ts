@@ -17,12 +17,8 @@ const gptReq = async (
         json: {
           tone: tone,
           type: type,
-          // type: "1",
           code: code,
           language: languageRequest,
-          // languageRequest: languageRequest,
-          // additional: additional,
-          // languageRequest: languageRequest,
           additional: additional,
         },
         headers: {

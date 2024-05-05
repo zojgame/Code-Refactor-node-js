@@ -6,7 +6,7 @@ import {
 } from "@/consts/data";
 import { Select, Input } from "antd";
 import { Sidebar } from "..";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import useStore from "@/store/store";
 import { gptReq } from "@/api/gpt";
 import { LoadingModal } from "..";
@@ -29,22 +29,31 @@ const MainPageSidebar = () => {
   const [form, setForm] = useState<InitialValue>(formInitialValue);
   const { codePrompt, setModal, setCodeProcessed } = useStore();
   const [isError, setIsError] = useState(false);
+  // const [isInitial, setIsInitial] = useState(true);
   const token = localStorage.getItem("token");
+
+  // useEffect(() => {
+
+  // }, [isError]);
 
   function handleOnSubmit(event: React.FormEvent<HTMLFormElement>): void {
     event.preventDefault();
+    let _isError = false;
     for (const field in form) {
       const key = field as keyof InitialValue;
       const val = form[key];
       if (typeof val === "object" && val.length === 0) {
-        setIsError(true);
+        _isError = true;
+        break;
       } else if (val === "" && key !== "additional") {
-        setIsError(true);
+        _isError = true;
+        break;
       } else {
-        setIsError(false);
+        _isError = false;
       }
     }
-    if (!isError) {
+    setIsError(_isError);
+    if (!_isError) {
       setModal(<LoadingModal />);
       if (token) {
         gptReq(

@@ -41,9 +41,9 @@ const getMessage = (
 Тебе подаётся код другого разработчика на языке ${
   LANGUAGES[languageId]
 }, тебе нужно ${TYPES[typeId]}, свой ответ представь только в виде кода, 
-как будто бы он находится в терминале, ничего лишнего добавлять не нужно, свои коментарии добавляй в коментарии характерные для данного языка программирования, код должен быть как можно ${
+как будто бы он находится в терминале, ничего лишнего добавлять не нужно, любые пояснения и свои коментарии добавляй в коментарии характерные для данного языка программирования, код должен быть как можно ${
   TONES[toneId]
-}.
+}. Если кода нет выполни, то что передано в запросе.
 ${
   additional === ""
     ? ""
@@ -92,23 +92,6 @@ class GPTController {
         const candidate = await User.findOne({ username });
 
         if (candidate) {
-          // const gptRes = new GPT_Response({
-          //   message: result,
-          //   language: language,
-          // });
-          // await gptRes.save();
-
-          // const gptReq = new GPT_Request({
-          //   message: result,
-          //   code: code,
-          //   language: language,
-          //   username: username,
-          //   gptResponse: gptRes,
-          // });
-          // await gptReq.save();
-
-          // const userHistory = candidate.historyRequests;
-          // const history = await History.findOne({ user: username });
           const history = new History({
             requestCode: result,
             responseCode: code,
@@ -116,15 +99,6 @@ class GPTController {
             progLang: language,
           });
           history.save();
-          // if (history) {
-          //   history.requests.push(gptReq);
-          //   await history.save();
-          // } else {
-          //   const his = new History({
-          //     user: username,
-          //   });
-          //   his.save();
-          // }
         }
       }
 
