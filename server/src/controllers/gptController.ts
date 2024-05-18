@@ -1,35 +1,17 @@
 import jwt from "jsonwebtoken";
-import User from "../models/user";
 import { Request, Response } from "express";
 import { ChatCompletionMessageParam } from "openai/resources";
-import { secret } from "../config";
-import { DecodedData } from "../types";
+import { DecodedData } from "../types/decodedData";
+import User from "../models/user";
 import History from "../models/history";
-
-const AUTH_TOKEN = "Bearer bb1a7ff1-b839-4324-939c-7a478b69aab7";
-
-const GPT_API = "https://api.caipacity.com/v1/chat/completions";
-
-type ROLE = "assistant" | "system" | "user";
-
-const ROLES: Record<string, ROLE> = {
-  ASSINSTANT: "assistant",
-  SYSTEM: "system",
-  USER: "user",
-};
-
-const TONES = ["профессиональнее", "понятнее"];
-
-const TYPES = [
-  "пояснить код коментариями",
-  "написать код как можно короче",
-  "удалить лишнии коментарии",
-  "переименовать переменные",
-  "сделать рефакторинг, переименовав все переменные и функции методом camel case",
-  "сделать рефакторинг, переименовав все переменные и функции методом snake case",
-];
-
-const LANGUAGES = ["javascript", "c", "swift", "typescript", "java"];
+import {
+  LANGUAGES,
+  TYPES,
+  TONES,
+  GPT_API,
+  AUTH_TOKEN,
+  ROLES,
+} from "../consts/gpt";
 
 const getMessage = (
   code: string,
@@ -43,7 +25,7 @@ const getMessage = (
 }, тебе нужно ${TYPES[typeId]}, свой ответ представь только в виде кода, 
 как будто бы он находится в терминале, ничего лишнего добавлять не нужно, любые пояснения и свои коментарии добавляй в коментарии характерные для данного языка программирования, код должен быть как можно ${
   TONES[toneId]
-}. Если кода нет выполни, то что передано в запросе.
+}. Если кода нет выполни, то что передано в запросе, ответ должен быть ввиде кода и/или комментариев для данного языка.
 ${
   additional === ""
     ? ""
@@ -69,8 +51,9 @@ class GPTController {
       },
     ];
 
+    const secret = process.env.SECRET;
     const token = req.headers.authorization?.split(" ")[1];
-    const decodedData = token ? jwt.verify(token, secret) : null;
+    const decodedData = token ? jwt.verify(token, secret!) : null;
 
     const data = {
       model: "gpt-3.5-turbo",
@@ -110,8 +93,9 @@ class GPTController {
 
   async getHistory(req: Request, res: Response) {
     try {
+      const secret = process.env.SECRET;
       const token = req.headers.authorization?.split(" ")[1];
-      const decodedData = token ? jwt.verify(token, secret) : null;
+      const decodedData = token ? jwt.verify(token, secret!) : null;
       if (decodedData) {
         const { username } = decodedData as DecodedData;
         const candidate = await User.findOne({ username });

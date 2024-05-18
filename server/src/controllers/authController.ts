@@ -4,7 +4,6 @@ import bcrypt from "bcryptjs";
 import { validationResult } from "express-validator";
 import { Request, Response } from "express";
 import User from "../models/user";
-import { secret } from "../config";
 import History from "../models/history";
 
 const generateAccessToken = (id: Types.ObjectId, username: string) => {
@@ -13,7 +12,10 @@ const generateAccessToken = (id: Types.ObjectId, username: string) => {
     username,
   };
 
-  return jwt.sign(payload, secret, { expiresIn: "365d" });
+  const secret = process.env.SECRET;
+  if (secret) {
+    return jwt.sign(payload, secret, { expiresIn: "365d" });
+  }
 };
 
 class AuthController {
@@ -51,7 +53,6 @@ class AuthController {
           "Пользователь успешно создан, перейдите на страницу авторизации",
       });
     } catch (error) {
-      console.log(error);
       res.status(400).json({ message: "Ошибка регистрации" });
     }
   }

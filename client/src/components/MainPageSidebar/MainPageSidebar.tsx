@@ -6,7 +6,7 @@ import {
 } from "@/consts/data";
 import { Select, Input } from "antd";
 import { Sidebar } from "..";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import useStore from "@/store/store";
 import { gptReq } from "@/api/gpt";
 import { LoadingModal } from "..";
@@ -31,10 +31,6 @@ const MainPageSidebar = () => {
   const [isError, setIsError] = useState(false);
   // const [isInitial, setIsInitial] = useState(true);
   const token = localStorage.getItem("token");
-
-  // useEffect(() => {
-
-  // }, [isError]);
 
   function handleOnSubmit(event: React.FormEvent<HTMLFormElement>): void {
     event.preventDefault();
