@@ -1,4 +1,5 @@
-const SERVER_API = "http://127.0.0.1:3000";
+// const SERVER_API = "http://127.0.0.1:3000";
+const SERVER_API = process.env.REACT_URL_API || "http://127.0.0.1:3000";
 const AUTH_API = `${SERVER_API}/auth`;
 const SINGUP_API = `${AUTH_API}/registration`;
 const SINGIN_API = `${AUTH_API}/login`;
