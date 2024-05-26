@@ -175,13 +175,13 @@ const HistoryPage = () => {
       <div className="w-full h-full">
         <HistoryTerminal
           title="Ваш код"
-          defaultCode={selectedHistory?.requestCode ?? undefined}
+          defaultCode={selectedHistory?.responseCode ?? undefined}
         />
       </div>
       <div className="w-full h-full">
         <HistoryTerminal
           title="Генерация"
-          defaultCode={selectedHistory?.responseCode ?? undefined}
+          defaultCode={selectedHistory?.requestCode ?? undefined}
         />
       </div>
     </div>

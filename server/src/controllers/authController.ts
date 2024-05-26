@@ -27,26 +27,24 @@ class AuthController {
           .status(400)
           .json({ message: "Ошибка при регистрации", errors: errors });
       }
+      console.log("errors", errors);
 
       const { username, password } = req.body;
       const candidate = await User.findOne({ username });
       if (candidate) {
         return res.status(400).json({ message: "Пользователь уже существует" });
       }
+      console.log("candidate", candidate);
 
       const hashPassword = bcrypt.hashSync(password, 7);
-      const userHistory = new History({
-        requests: [],
-        user: username,
-      });
 
       const user = new User({
         username: username,
         password: hashPassword,
-        historyRequests: userHistory,
       });
 
-      await userHistory.save();
+      console.log("user", user);
+
       await user.save();
       return res.status(200).json({
         message:
@@ -54,6 +52,7 @@ class AuthController {
       });
     } catch (error) {
       res.status(400).json({ message: "Ошибка регистрации" });
+      console.log("error", error);
     }
   }
 
