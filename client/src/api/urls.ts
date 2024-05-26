@@ -1,4 +1,3 @@
-// const SERVER_API = "http://127.0.0.1:3000";
 const SERVER_API = "http://31.128.39.41:3000";
 const AUTH_API = `${SERVER_API}/auth`;
 const SINGUP_API = `${AUTH_API}/registration`;
