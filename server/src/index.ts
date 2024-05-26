@@ -22,7 +22,9 @@ app.get("/", (_req, res) => {
 
 const start = async () => {
   try {
-    await mongoose.connect(database_url);
+    await mongoose
+      .connect(database_url)
+      .then(() => console.log("Data base connected"));
     app.listen(port, () => console.log(`server started on ${port}`));
   } catch (error) {
     console.log(error);
