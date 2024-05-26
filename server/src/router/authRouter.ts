@@ -2,7 +2,7 @@ import { Router } from "express";
 import { check } from "express-validator";
 import { Auth_controller } from "../controllers/authController";
 
-const Auth_Router: Router = new Router();
+const Auth_Router = Router();
 
 Auth_Router.post(
   "/registration",
