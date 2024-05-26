@@ -26,27 +26,9 @@ type HistoryRes = {
   dateTimeCreate: string;
 };
 
-type Message = {
-  role: string;
-  content: string;
-};
-
-type Choice = {
-  finish_reason: string;
-  index: number;
-  message: Message;
-};
-
 type GPTRes = {
   message: string;
 };
-// type GPTRes = {
-//   id: string;
-//   object: string;
-//   created: number;
-//   model: string;
-//   choices: Choice[];
-// };
 
 export type {
   Language,

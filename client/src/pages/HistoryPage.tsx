@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { useEffect } from "react";
 import { useState } from "react";
 import dayjs from "dayjs";
@@ -82,10 +83,10 @@ const HistoryPage = () => {
       getHistory(token)
         .then((data) => {
           if (data) {
-            if (data.status === 204) {
+            if ((data as any).status === 204) {
               console.log("Нет данных");
             } else {
-              const { history } = data;
+              const { history } = data as any;
 
               setHistory(history as HistoryRes[]);
               setIsAuth(true);
